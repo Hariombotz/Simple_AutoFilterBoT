@@ -150,7 +150,7 @@ class Database:
     async def get_db_size(self):
         return (await self.db.command("dbstats"))['dataSize']
 
-async def setFsub(self , grpID , fsubID):
+    async def setFsub(self , grpID , fsubID):
         return await self.grp_and_ids.update_one({'grpID': grpID} , {'$set': {'grpID': grpID , "fsubID": fsubID}}, upsert=True)    
     async def getFsub(self , grpID):
         link = await self.grp_and_ids.find_one({"grpID": grpID})
