@@ -736,14 +736,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if chat_type == enums.ChatType.PRIVATE:
             await query.message.reply_to_message.delete()
             await query.message.delete()
-
-elif query.data.startswith("checksub"):
+    elif query.data.startswith("checksub"):
         ident, file_id , grp_id = query.data.split("#")
         if grp_id != 'None' or grp_id != '':
             chat_id = grp_id
         else:
             chat_id = query.message.chat.id
-        if AUTH_CHANNEL and not await is_req_subscribed(client, query):
+        if AUTH_CHANNEL and not await is_subscribed(client, query):
             await query.answer("ɪ ʟɪᴋᴇ ʏᴏᴜʀ sᴍᴀʀᴛɴᴇss ʙᴜᴛ ᴅᴏɴ'ᴛ ʙᴇ ᴏᴠᴇʀsᴍᴀʀᴛ 😒\nꜰɪʀsᴛ ᴊᴏɪɴ ᴏᴜʀ ᴜᴘᴅᴀᴛᴇs ᴄʜᴀɴɴᴇʟ 😒", show_alert=True)
             return         
         files_ = await get_file_details(file_id)
