@@ -9,8 +9,11 @@ class Database:
         self.db = self._client[database_name]
         self.col = self.db.users
         self.grp = self.db.groups
+        self.grp_and_ids = fsubs.grp_and_ids
+        self.movies_update_channel = mydb.movies_update_channel
 
-
+    
+    
     def new_user(self, id, name):
         return dict(
             id = id,
