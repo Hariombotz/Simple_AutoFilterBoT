@@ -737,7 +737,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             await query.message.reply_to_message.delete()
             await query.message.delete()
 
-        elif query.data.startswith("checksub"):
+elif query.data.startswith("checksub"):
         ident, file_id , grp_id = query.data.split("#")
         if grp_id != 'None' or grp_id != '':
             chat_id = grp_id
