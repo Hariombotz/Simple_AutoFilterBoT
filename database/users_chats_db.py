@@ -150,5 +150,37 @@ class Database:
     async def get_db_size(self):
         return (await self.db.command("dbstats"))['dataSize']
 
+async def setFsub(self , grpID , fsubID):
+        return await self.grp_and_ids.update_one({'grpID': grpID} , {'$set': {'grpID': grpID , "fsubID": fsubID}}, upsert=True)    
+    async def getFsub(self , grpID):
+        link = await self.grp_and_ids.find_one({"grpID": grpID})
+        if link is not None:
+            return link.get("fsubID")
+        else:
+            return None
+    async def delFsub(self , grpID):
+        result =  await self.grp_and_ids.delete_one({"grpID": grpID})
+        if result.deleted_count != 0:
+            return True
+        else:
+            return False
+    async def movies_update_channel_id(self , id=None):
+        if id is None:
+            myLinks = await self.movies_update_channel.find_one({})
+            if myLinks is not None:
+                return myLinks.get("id")
+            else:
+                return None
+        return await self.movies_update_channel.update_one({} , {'$set': {'id': id}} , upsert=True)
+    async def del_movies_channel_id(self):
+        try: 
+            isDeleted = await self.movies_update_channel.delete_one({})
+            if isDeleted.deleted_count > 0:
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(f"Got err in db set : {e}")
+            return False
 
 db = Database(DATABASE_URI, DATABASE_NAME)
